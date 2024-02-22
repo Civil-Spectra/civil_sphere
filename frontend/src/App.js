@@ -15,6 +15,7 @@ import Signup from './user/Signup';
 import PrivateRoute from './user/PrivateRoute';
 import { AuthProvider } from './user/AuthContext';
 import './App.css';
+import CantileverWallCalculator from './wallDesign/Walldesign_homepage';
 
 const App = () => {
     return (
@@ -56,6 +57,13 @@ const App = () => {
                                     <WorkDetailsPage />
                                 </PrivateRoute>
                             } />
+
+                            <Route path="cantilever_wall" element={
+                                <PrivateRoute>
+                                    <CantileverWallCalculator />
+                                </PrivateRoute>
+                            } />
+
                             {/* Add more routes as needed */}
                         </Routes>
                     </main>
