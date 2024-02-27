@@ -1,14 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
 import './Walldesign.css';
 import WallVisualizer from './Wallsection.js';
 // src/components/CantileverWallCalculator.js
 import Stem_Design from './Wall_Design/Stem_Design.js';
 import Heel_Design from './Wall_Design/Heel_Design.js';
 import Toe_Design from './Wall_Design/Toe_Design.js';
-import html2canvas from 'html2canvas';
-import { jsPDF } from 'jspdf';
-import html2pdf from 'html2pdf.js';
+
 
 
 // import React, { useState } from 'react';
@@ -162,44 +159,6 @@ const CantileverWallCalculator = () => {
       setIsToeDesignVisible(!isToeDesignVisible);
 
     };
-
-
-    function downloadDivContentAsWord(selector, filename = 'document.doc') {
-      console.log("Downloading as word");
-      const element = document.querySelector(selector);
-      if (!element) {
-        console.error('Element not found:', selector);
-        return;
-      }
-    
-      // Wrap the extracted HTML content in a full HTML document structure
-      const htmlContent = `
-        <!DOCTYPE html>
-        <html>
-        <head>
-        <meta charset="utf-8">
-        <title>Document</title>
-        </head>
-        <body>
-        ${element.outerHTML}
-        </body>
-        </html>
-      `;
-    
-      // Create a Blob with the full HTML content and type set to 'application/msword'
-      const blob = new Blob(['\ufeff', htmlContent], { type: 'application/msword' });
-    
-      // Create a download link and trigger the download
-      const url = URL.createObjectURL(blob);
-      const downloadLink = document.createElement('a');
-      downloadLink.href = url;
-      downloadLink.download = filename; // This can be any filename with .doc extension
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      document.body.removeChild(downloadLink);
-      console.log("word downloaded");
-    }
-    
     
      
   
@@ -209,7 +168,7 @@ const CantileverWallCalculator = () => {
       <div className = "wallImageAndDataEntry">
         <WallVisualizer wallData={wallData} />
         <div id = "Wall-Form-Data-Entry">
-          <h2>Wall Specifications</h2>
+          <h2>Wall Details</h2>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="name">Name</label>
@@ -277,7 +236,7 @@ const CantileverWallCalculator = () => {
               ))}
             </div>
             
-            <button type="submit">Submit Wall Data</button>
+            {/* <button type="submit">Submit Wall Data</button> */}
           </form>
         </div>
       </div>
@@ -308,12 +267,9 @@ const CantileverWallCalculator = () => {
               DOWNLOAD ALL
             </button> */}
 
-            
-
-
-
-
+      
         </div>
+
 
         <div className = "DesignSheetsCantileverWall">
           <div>
@@ -414,40 +370,35 @@ const Calculate_load_data = (wallData) => {
 const WeightDisplayTable = ({ wallData }) => {
       const { footingWeight, stemWeight,keyWeight, totalWeight,footing_z,stem_z,key_z,cg_z } = Calculate_weight_props(wallData);
       return (
-        <div className="rough-table-container">
+        <div className="weight-table-container">
          <h4 >Wall Weight</h4>
           <table >
             <thead>
               <tr>
                 <th>Component</th>
                 <th>Weight (kips)</th>
-                <th>Unit</th>
                 <th>z (ft)</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Footing </td>
-                <td>{footingWeight.toFixed(2)}</td>
-                <td>kips</td>
-                <td>{footing_z.toFixed(2)}</td>              
+              <td>Footing</td>
+              <td>{`${wallData.footingdepth_Hf} * (${wallData.toelength_a} + ${wallData.heellength_c} + ${wallData.wallthick_b}) * ${wallData.concreteunitweight} = ${footingWeight.toFixed(2)}`}</td>
+              <td>{footing_z.toFixed(2)}</td>              
               </tr>
               <tr>
                 <td>Stem </td>
-                <td>{stemWeight.toFixed(2)}</td>
-                <td>kips</td>
+                <td>{`${wallData.stemheight_H} * ${wallData.wallthick_b} * ${wallData.concreteunitweight} = ${stemWeight.toFixed(2)}`}</td>
                 <td>{stem_z}</td>
               </tr>
               <tr>
                 <td>Key </td>
                 <td>{keyWeight.toFixed(2)}</td>
-                <td>kips</td>
                 <td>{key_z.toFixed(2)}</td>
               </tr>
               <tr>
                 <td>Total Weight</td>
                 <td>{totalWeight.toFixed(2)}</td>
-                <td>kips</td>
               </tr>
             </tbody>
           </table>

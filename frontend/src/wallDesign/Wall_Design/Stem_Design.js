@@ -72,16 +72,16 @@ const Stem_Design = ({ wallData }) => {
 
 
     return (
-        <div >
-        <h2>STEM REINFORCEMENT DESIGN</h2>
-            <Stem_Load_Combination_Table 
-          wallData={wallData} 
-          loadFactor={{
-            EH_f: 1, 
-            LS_f: 1,
-           }} 
-          tableHeading= "Service I - Maximum Loading" 
-        />
+      <div className="centered-container">
+      <h2 className="left-aligned-heading">STEM REINFORCEMENT DESIGN</h2>
+      <Stem_Load_Combination_Table 
+        wallData={wallData} 
+        loadFactor={{
+          EH_f: 1, 
+          LS_f: 1,
+        }} 
+        tableHeading="Service I - Maximum Loading" 
+      />
 
         <Stem_Load_Combination_Table 
           wallData={wallData} 

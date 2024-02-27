@@ -1,18 +1,22 @@
 /* Walldesign.css */
 
 .wall-form-container {
-  /* max-width: 800px; */
   margin: auto;
   padding: 20px;
-  background-color: #f9f9f9; /* Example background color */
-  border-radius: 8px; /* Example border radius */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Example box shadow for some depth */
-  display: flex; /* Use flexbox to align label and input */
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column; /* Changed to stack children vertically */
+  align-items: stretch; /* Ensure children stretch to match the container's width */
 }
 
-
-#Wall-Form-Data-Entry {
-  min-width : 30%;
+/* Adjust the styling for the section containing the wall image and data entry form */
+.wallImageAndDataEntry {
+  display: flex;
+  flex-direction: column; /* Stack image and form vertically */
+  align-items: center; /* Center-align the items for a better appearance on wide screens */
+  margin-bottom: 20px; /* Add some space between this section and the next */
 }
 
 .CalcCols1 {
@@ -29,6 +33,14 @@
   border-radius: 1em;
 }
 
+.active-button {
+  background-color: #007bff; /* Blue background for active tab */
+  color: white; /* White text for active tab */
+}
+
+
+
+
 .form-group {
   display: flex; /* Use flexbox to align label and input */
   align-items: center; /* Align items vertically */
@@ -42,13 +54,27 @@
 }
 
 .form-group input {
-  flex: 0.5; /* Allow the input to take up the remaining space */
+  flex: 0.1; /* Allow the input to take up the remaining space */
   padding: 5px;
   border: 1px solid #ced4da;
   border-radius: 4px;
 }
 
-/* Add some styles to your submit button for better appearance */
+.centered-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.left-aligned-heading {
+  text-align: left;
+  width: 100%; /* Ensure the heading takes full width to align text properly */
+  padding-left: 20px; /* Adjust as needed for your design */
+}
+
+
+/* Add some styles to your submit button for better appearance
 button[type="submit"] {
   padding: 10px 20px;
   background-color: #007bff;
@@ -61,7 +87,7 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
   background-color: #0056b3;
-}
+} */
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
@@ -81,21 +107,25 @@ button[type="submit"]:hover {
   }
 }
 
+/* General styles for tables within DesignSheetsCantileverWall */
+.DesignSheetsCantileverWall table {
+  width: auto; /* Ensures table takes full width of its container */
+  margin: 0 auto; /* Center the table horizontally */
+  border-collapse: separate; /* Necessary for border-spacing to work */
+  border-spacing: 50px 0; /* Increase space between columns, no space added between rows */
+}
 
-#unfactoredLoadTable th:nth-of-type(1){width :25%}
-#unfactoredLoadTable th:nth-of-type(2){width :10%}
-#unfactoredLoadTable th:nth-of-type(3){width :10%}
-#unfactoredLoadTable th:nth-of-type(4){width :10%}
+/* Styles for table cells to center text and add padding */
+.DesignSheetsCantileverWall th, .DesignSheetsCantileverWall td {
+  text-align: center; /* Center-align text horizontally */
+  vertical-align: middle; /* Center-align content vertically */
+  padding: 5px; /* Add padding inside cells for spacing around content */
+}
 
-
-
-#factoredLoadTable th:nth-of-type(1){width :25%}
-#factoredLoadTable th:nth-of-type(2){width :10%}
-#factoredLoadTable th:nth-of-type(3){width :10%}
-#factoredLoadTable th:nth-of-type(4){width :10%}
-#factoredLoadTable th:nth-of-type(5){width :10%}
-#factoredLoadTable th:nth-of-type(6){width :10%}
-
+/* Left-align the first column */
+.DesignSheetsCantileverWall th:first-child, .DesignSheetsCantileverWall td:first-child {
+  text-align: left; /* Left-align text for the first column */
+}
 
 .bearingAndSlidingCheck {
   display : flex;
@@ -105,5 +135,4 @@ button[type="submit"]:hover {
   margin: auto;
 }
 
-#Toe_Load_Calculation_Table th:nth-of-type(1){width :25%}
-
+/* #Toe_Load_Calculation_Table th:nth-of-type(1){width :25%} */
