@@ -5,11 +5,6 @@ import Footer from './base/Footer';
 import HomePage from './base/HomePage';
 import About from './base/About';
 import ContactUs from './base/ContactUs';
-
-import WorkDetailsPage from './estimator/EstimationDetailsPage';
-import EstimationPage from './estimator/Estimation_homepage';
-import WorkSpecificationForm from './estimator/Specification_entry';
-import SpecificationList from './estimator/Specification_list';
 import Login from './user/Login';
 import Signup from './user/Signup';
 import PrivateRoute from './user/PrivateRoute';
@@ -30,38 +25,11 @@ const App = () => {
                             <Route path="/signup" element={<Signup />} />
                             <Route path="/about" element={<About />} />
                             <Route path="/contactus" element={<ContactUs />} />
-
-                            {/* Wrap the component with PrivateRoute within the element prop */}
-                            <Route path="/estimationpage" element={
-                                <PrivateRoute>
-                                    <EstimationPage />
-                                </PrivateRoute>
-                            } />
-                            {/* <Route path="/estimationpages" element={
-                                <PrivateRoute>
-                                    <EstimationPages />
-                                </PrivateRoute>
-                            } /> */}
-                            <Route path="/specification_list" element={
-                                <PrivateRoute>
-                                    <SpecificationList />
-                                </PrivateRoute>
-                            } />
-                            <Route path="/specification_entry" element={
-                                <PrivateRoute>
-                                    <WorkSpecificationForm />
-                                </PrivateRoute>
-                            } />
-                            <Route path="/details/:projectId" element={
-                                <PrivateRoute>
-                                    <WorkDetailsPage />
-                                </PrivateRoute>
-                            } />
-
+                            
                             <Route path="cantilever_wall" element={
-                                <PrivateRoute>
+                                
                                     <CantileverWallCalculator />
-                                </PrivateRoute>
+                                
                             } />
 
                             {/* Add more routes as needed */}
