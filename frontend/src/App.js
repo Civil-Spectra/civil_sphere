@@ -59,9 +59,9 @@ const App = () => {
                             } />
 
                             <Route path="cantilever_wall" element={
-                                <PrivateRoute>
+                                // <PrivateRoute>
                                     <CantileverWallCalculator />
-                                </PrivateRoute>
+                                // </PrivateRoute>
                             } />
 
                             {/* Add more routes as needed */}
