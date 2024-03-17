@@ -11,20 +11,21 @@ import Toe_Design from './Wall_Design/Toe_Design.js';
 // import React, { useState } from 'react';
 import axios from 'axios';
 
+
 const CantileverWallCalculator = () => {
   const [wallData, setWallData] = useState({
     //all of these below are initial wallData or default wallData
     name: 'Cantilever Wall Design', 
-    toelength_a: 1.0,
+    toelength_a: 2.0,
     wallthick_b: 1.0,
     heellength_c: 6.0,
     stemheight_H: 9.75,
     footingdepth_Hf: 1.0,
     lengthoffooting_Lf: 1.0,
     concreteunitweight: 0.150,
-    keydistancefromrotatingpoint: 0.0,
-    keydepth: 1.25,
-    keywidth: 0.67,
+    keydistancefromrotatingpoint: 1.0,
+    keydepth: 2,
+    keywidth: 1,
     soilunitweight: 0.12,
     frictionangle: 30,
     factoredbearingresistanceinstrength: 3,
@@ -91,7 +92,7 @@ const CantileverWallCalculator = () => {
       case 'wallthick_b':
         return 'Wall Thickness (b), ft';
       case 'heellength_c':
-        return 'Heel Length (e), ft';
+        return 'Heel Length (c), ft';
       case 'stemheight_H':
         return 'Stem Height (H), ft';  
       case 'footingdepth_Hf':
@@ -362,7 +363,7 @@ const Calculate_load_data = (wallData) => {
   const surcharge_LL_z = wallData.stemheight_H/2
   const passiveEarthPressure_PH = surcharge_LL
   const passiveEarthPressure_PH_z = surcharge_LL_z
-  return { verticalEarthPressure_EV,verticalEarthPressure_EV_z, horizontalEarthPressure_EH, horizontalEarthPressure_EH_z, surcharge_LL, surcharge_LL_z,passiveEarthPressure_PH,passiveEarthPressure_PH_z}
+  return { verticalEarthPressure_EV,verticalEarthPressure_EV_z, ka, horizontalEarthPressure_EH, horizontalEarthPressure_EH_z, surcharge_LL, surcharge_LL_z,passiveEarthPressure_PH,passiveEarthPressure_PH_z}
 };  
 
 
@@ -383,26 +384,30 @@ const WeightDisplayTable = ({ wallData }) => {
             <tbody>
               <tr>
               <td>Footing</td>
-              <td>{`${wallData.footingdepth_Hf} * (${wallData.toelength_a} + ${wallData.heellength_c} + ${wallData.wallthick_b}) * ${wallData.concreteunitweight} = ${footingWeight.toFixed(2)}`}</td>
-              <td>{footing_z.toFixed(2)}</td>              
+              <td>{`${wallData.footingdepth_Hf}*(${wallData.toelength_a}+${wallData.heellength_c}+${wallData.wallthick_b})*${wallData.concreteunitweight} = ${footingWeight.toFixed(2)}`}</td>
+              <td>{`(${wallData.toelength_a}+${wallData.wallthick_b}+${wallData.heellength_c})/2 = ${footing_z.toFixed(2)}`}</td>              
               </tr>
               <tr>
                 <td>Stem </td>
-                <td>{`${wallData.stemheight_H} * ${wallData.wallthick_b} * ${wallData.concreteunitweight} = ${stemWeight.toFixed(2)}`}</td>
-                <td>{stem_z}</td>
+                <td>{`${wallData.stemheight_H}*${wallData.wallthick_b}*${wallData.concreteunitweight} = ${stemWeight.toFixed(2)}`}</td>
+                <td>{`${wallData.toelength_a} + ${wallData.wallthick_b}/2 = ${stem_z}`}</td>
               </tr>
               <tr>
                 <td>Key </td>
-                <td>{keyWeight.toFixed(2)}</td>
-                <td>{key_z.toFixed(2)}</td>
+                <td>{`${wallData.keydepth}*${wallData.keywidth}*${wallData.concreteunitweight} = ${keyWeight.toFixed(2)}`}</td>
+                <td>{`${wallData.keydistancefromrotatingpoint} + ${wallData.keywidth}/2 = ${key_z.toFixed(2)}`}</td>
               </tr>
               <tr>
                 <td>Total Weight</td>
-                <td>{totalWeight.toFixed(2)}</td>
+                <td>{`${footingWeight.toFixed(2)}+${stemWeight.toFixed(2)}+${keyWeight.toFixed(2)} = ${totalWeight.toFixed(2)}`}</td>
               </tr>
             </tbody>
           </table>
-        <p>The C.G. lies at {cg_z.toFixed(2)} ft.  ( <b> cg_z = {cg_z.toFixed(2)}</b>)</p>
+        <p>The C.G. lies at:</p> 
+        <p>
+        {`= (${footingWeight.toFixed(2)}*${footing_z.toFixed(2)} + ${stemWeight.toFixed(2)}*${stem_z.toFixed(2)} + ${keyWeight.toFixed(2)}*${key_z.toFixed(2)})/${totalWeight.toFixed(2)}`}
+        </p>
+        <p> = {cg_z.toFixed(2)} ft from pivot point</p> 
         </div>
       );
     };
@@ -410,7 +415,7 @@ const WeightDisplayTable = ({ wallData }) => {
     // Separated Table Component (Should be in its own file ideally)
 const UnfactoredLoadTable = ({ wallData }) => {
   
-    const { verticalEarthPressure_EV, verticalEarthPressure_EV_z, horizontalEarthPressure_EH, horizontalEarthPressure_EH_z, surcharge_LL, surcharge_LL_z,passiveEarthPressure_PH,passiveEarthPressure_PH_z} = Calculate_load_data(wallData); 
+    const { verticalEarthPressure_EV, verticalEarthPressure_EV_z, ka, horizontalEarthPressure_EH, horizontalEarthPressure_EH_z, surcharge_LL, surcharge_LL_z,passiveEarthPressure_PH,passiveEarthPressure_PH_z} = Calculate_load_data(wallData); 
     const { footingWeight, stemWeight, totalWeight, z1, z2, cg_z } = Calculate_weight_props(wallData);
    return (
         <div >
@@ -420,39 +425,40 @@ const UnfactoredLoadTable = ({ wallData }) => {
               <tr>
                 <th>Component</th>
                 <th>Weight (kips)</th>
-                <th>Unit</th>
                 <th>C.G. from pivot (ft)</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Retaining wall, RW: </td>
+                <td>DC Load, DC: </td>
                 <td>{totalWeight.toFixed(2)}</td>
-                <td>kips</td>
+                
                 <td>{cg_z.toFixed(2)}</td>              
               </tr>
               <tr>
                 <td>Vertical Earth Pressure, EV : </td>
-                <td>{verticalEarthPressure_EV.toFixed(2)}</td>
-                <td>kips</td>
-                <td>{verticalEarthPressure_EV_z.toFixed(2)}</td>
+                <td>{`${wallData.soilunitweight}*${wallData.stemheight_H}*${wallData.heellength_c} = ${verticalEarthPressure_EV.toFixed(2)}`}</td>
+                
+                <td>{`${wallData.toelength_a}+${wallData.heellength_c}/2+${wallData.wallthick_b} = ${verticalEarthPressure_EV_z.toFixed(2)}`}</td>
               </tr>
               <tr>
-                <td>Horizontal Earth pressure, EH :</td>
-                <td>{horizontalEarthPressure_EH.toFixed(2)}</td>
-                <td>kips</td>
-                <td>{horizontalEarthPressure_EH_z.toFixed(2)}</td>
+              <td>Horizontal Earth pressure, EH :</td>
+              <td>
+              {`1/2*${ka}*${wallData.soilunitweight}*(${wallData.footingdepth_Hf}+${wallData.stemheight_H}+${wallData.keydepth})^2 = ${horizontalEarthPressure_EH.toFixed(2)}`}
+              </td>
+
+                <td>{`(${wallData.stemheight_H}+${wallData.footingdepth_Hf})/3 = ${horizontalEarthPressure_EH_z.toFixed(2)}`}</td>
               </tr>
               <tr>
                 <td>LL Surcharge, LS :</td>
                 <td>{surcharge_LL.toFixed(2)}</td>
-                <td>kips</td>
+                
                 <td>{surcharge_LL_z.toFixed(2)}</td>
               </tr>
               <tr>
                 <td>Passive Earth Pressure, EHp:</td>
                 <td>{passiveEarthPressure_PH.toFixed(2)}</td>
-                <td>kips</td>
+                
                 <td>{passiveEarthPressure_PH_z}</td>
               </tr>
             </tbody>

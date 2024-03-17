@@ -1,98 +1,52 @@
 /* Navbar.css */
-/* Luxurious Navbar Styles */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #1A1A1A; /* Darker shade for a premium feel */
-  padding: 20px 40px; /* Increased padding */
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
+}
+
+.nav-links {
+  display: flex;
 }
 
 .nav-links a,
-.nav-user a,
-.logout-button {
-  margin: 0 15px;
-  text-decoration: none;
-  color: #EAEAEA; /* Light text for contrast */
-  font-family: 'Helvetica Neue', sans-serif; /* Modern, clean font */
-  font-weight: 300; /* Lighter font weights are often perceived as more luxurious */
-}
-
-.logout-button {
-  background-color: #4CAF50; /* Subdued, elegant green */
+.nav-user a {
   color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 20px; /* More pronounced rounded corners */
-  cursor: pointer;
-  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  text-decoration: none;
+  margin: 0 10px;
+  padding: 5px 10px;
+  transition: background-color 0.3s ease;
 }
 
-.logout-button:hover {
-  background-color: #43A047; /* Slightly darker shade on hover */
+.nav-links a:hover,
+.nav-user a:hover {
+  background-color: #70717b58; 
+  /* color of shading that comes when you move over the icons */
+  border-radius: 5px;
+}
+
+.nav-user {
+  display: flex;
+  align-items: center;
 }
 
 .username {
-  margin-right: 25px;
-  color: #EAEAEA;
-  font-weight: 400;
+  margin-right: 20px;
 }
 
-
-
-  /* ContactUs.css */
-/* Luxurious Contact Form Styles */
-.contact-container {
-  max-width: 500px; /* Slightly wider for a more spacious layout */
-  margin: 20px auto;
-  padding: 40px;
-  background-color: #f0f0f0; /* Light grey for a subtle, upscale background */
-  border-radius: 10px; /* Slightly larger radius for softer edges */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* More pronounced shadow for depth */
-}
-
-.contact-title {
-  font-size: 28px; /* Larger title for emphasis */
-  margin-bottom: 30px;
-  color: #333; /* Darker color for contrast */
-  font-family: 'Times New Roman', Times, serif; /* Classic, elegant font choice */
-}
-
-.form-group {
-  margin-bottom: 20px; /* Increased spacing */
-}
-
-.form-label {
-  display: block;
-  font-weight: 600; /* Bold label for clear distinction */
-  margin-bottom: 10px;
-  color: #555; /* Dark grey for readability */
-}
-
-.form-input,
-.form-textarea {
-  width: 100%;
-  padding: 15px; /* More padding for ease of input */
-  border: 2px solid #ccc; /* Slightly thicker border */
-  border-radius: 5px; /* Soft, modern rounded corners */
-  font-family: 'Arial', sans-serif; /* Consistent, readable font */
-}
-
-.form-textarea {
-  resize: vertical;
-}
-
-.form-button {
-  background-color: #007BFF; /* Bright, confident blue */
-  color: #ffffff;
+.logout-button {
+  background-color: #f44336; /* Red color for logout to make it stand out */
+  color: white;
   border: none;
-  padding: 15px 30px; /* More generous padding */
-  border-radius: 5px; /* Consistent with input styles */
+  padding: 5px 10px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease; /* Added scale effect */
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
-.form-button:hover {
-  background-color: #0056b3;
-  transform: scale(1.05); /* Slight enlargement on hover for interaction feedback */
+.logout-button:hover {
+  background-color: #d32f2f; /* Darken the button slightly on hover */
 }
