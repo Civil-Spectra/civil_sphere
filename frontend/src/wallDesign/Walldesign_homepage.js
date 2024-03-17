@@ -6,9 +6,7 @@ import WallVisualizer from './Wallsection.js';
 import Stem_Design from './Wall_Design/Stem_Design.js';
 import Heel_Design from './Wall_Design/Heel_Design.js';
 import Toe_Design from './Wall_Design/Toe_Design.js';
-import html2canvas from 'html2canvas';
-import { jsPDF } from 'jspdf';
-import html2pdf from 'html2pdf.js';
+
 
 
 // import React, { useState } from 'react';
